@@ -1,7 +1,7 @@
 using UnityEngine;
-//using Unity.Netcode;
+using Unity.Netcode;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     [Header("Configuración de Movimiento")]
     [SerializeField] private float moveSpeed = 6f;
@@ -14,8 +14,6 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 moveInput;
 
-    public bool IsOwner => true;
-
     private void Update()
     {
         if (!IsOwner) return;
@@ -25,7 +23,6 @@ public class PlayerController : MonoBehaviour
             moveInput = Vector2.zero;
             return;
         }
-
         ReadInput();
     }
 
@@ -44,7 +41,6 @@ public class PlayerController : MonoBehaviour
 
         moveInput = new Vector2(moveX, moveY).normalized;
 
-        // Actualizamos estado básico
         if (moveInput != Vector2.zero)
         {
             currentState = PlayerState.Moving;
